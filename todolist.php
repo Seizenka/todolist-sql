@@ -11,11 +11,25 @@ catch (Exception $e){
     $req = $bdd->query("SELECT * FROM todolist");
     $affiche=$req->fetchAll();
     //Parcourir le tableau
+    echo '<h1> Ma todolist !</h1>';
     foreach($affiche as $component){
-        echo '<tr>';
-        echo '<td><input name="check[]" type="checkbox" value="'.$component['id'].'">'.$component["task"].'</td>'; //check[] parce qu'on peut check plusieurs en même temps
+        echo '<td><input name="check[]" type="checkbox" value="'.$component['id'].'">'.$component["task"].'</td><p></p>'; //check[] parce qu'on peut check plusieurs en même temps
       
     }
+}
+
+    //Pour afficher le contenu de la base de données
+    function archivage(){
+        $bdd = new PDO ('mysql:host=localhost; dbname=becode; charset=utf8', 'root', 'user');
+        $ask = $bdd->query("SELECT * FROM Archive");
+        $show=$ask->fetchAll();
+        //Parcourir le tableau
+        echo '<h1>ARCHIVE</h1>';
+        foreach($show as $composent){
+            echo '<p>'.$composent["done"].'</p>'; //check[] parce qu'on peut check plusieurs en même temps
+          
+        }
+        
     
     
     
@@ -45,6 +59,7 @@ catch (Exception $e){
         header("location:todolist.php");
     }
 
+    
 
 ?>
 
@@ -55,22 +70,32 @@ catch (Exception $e){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>TODOLIST</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/scss/style.scss">
 </head>
 <body>
 
-    
-    <form action="#" method="POST">
-    <?php afficher()?> <!-- On rappelle la fonction -->
+<!--les tâches à enregistrer représentées dans un premier bloc -->
+    <fieldset>  
+        <form action="#" method="POST">
+        <?php afficher()?> <!-- On rappelle la fonction -->
         <input type="submit" value="supprimer" name="supprimer"><p></p>
-    </form>
+        <input type="submit" value="archive" name="archive"><p></p>
+        </form>
+    </fieldset>
 
-    <form action="#" method="POST">
-        <label for="task">La tâche à ajouter</label>
-        <input name="task" type="text"required placeholder="rajouter une tâche">
-        <input type="submit" value="ajouter" name="ajout">
+    <fieldset>
+        <?php archivage()?>
+    </fieldset>
 
-    </form>
+
+<!-- Deuxième bloc où on retrouve le formulaire et le bouton ajouter -->
+    <fieldset>
+        <form action="#" method="POST">
+            <label for="task">La tâche à ajouter</label>
+            <input name="task" type="text"required placeholder="rajouter une tâche">
+            <input type="submit" value="ajouter" name="ajout">
+        </form>
+    </fieldset>
+
 </body>
 </html>
-
