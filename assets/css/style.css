@@ -1,1 +1,32 @@
-/* No CSS *//*# sourceMappingURL=style.css.map */
+body { font-family: 'Open Sans', sans-serif; background-color: black; }
+
+h1 { color: white; text-align: center; }
+
+h3 { color: white; text-align: center; }
+
+p { color: white; text-align: center; }
+
+td { color: white; }
+
+.form { text-align: center; padding: 20px; }
+
+label { color: white; }
+
+fieldset { background-color: #302f30; border: none; margin: 5px; border-radius: 10px; }
+
+.ajout { background-color: #6a08a3; border: none; border-radius: 10px; padding: 10px; color: white; }
+
+.rajout { background-color: #6a08a3; border: none; border-radius: 10px; padding: 10px; color: white; }
+
+.sup { background-color: #6a08a3; border: none; border-radius: 10px; padding: 10px; color: white; width: 15%; }
+
+.archive { background-color: #6a08a3; border: none; border-radius: 10px; padding: 10px; color: white; width: 15%; }
+
+.check { color: white; text-align: center; }
+
+.btn { text-align: center; }
+
+@media (min-width: 300px) and (max-width: 800px) { .sup, .archive { width: 50%; }
+  .rajout, .ajout { margin-top: 10px; }
+  .ajout { width: 50%; } }
+/*# sourceMappingURL=style.css.map */

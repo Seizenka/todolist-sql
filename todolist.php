@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+//on se connecte à notre database
   try{
     $bdd = new PDO ('mysql:host=localhost; dbname=becode; charset=utf8', 'root', 'user');
 }
@@ -12,10 +14,12 @@ catch (Exception $e){
     $affiche=$req->fetchAll();
     //Parcourir le tableau
     echo '<h1> Ma todolist !</h1>';
+    echo '<div class="check">';
     foreach($affiche as $component){
         echo '<td><input name="check[]" type="checkbox" value="'.$component['id'].'">'.$component["task"].'</td><p></p>'; //check[] parce qu'on peut check plusieurs en même temps
       
     }
+    echo '</div>';
 }
 
     //Pour afficher le contenu de la base de données
@@ -24,15 +28,11 @@ catch (Exception $e){
         $ask = $bdd->query("SELECT * FROM Archive");
         $show=$ask->fetchAll();
         //Parcourir le tableau
-        echo '<h1>ARCHIVE</h1>';
+        echo '<h3>ARCHIVE</h3>';
         foreach($show as $composent){
             echo '<p>'.$composent["done"].'</p>'; //check[] parce qu'on peut check plusieurs en même temps
           
-        }
-        
-    
-    
-    
+        }    
     }
     //Nettoyer les champs
     $sanitisation = array (
@@ -59,6 +59,14 @@ catch (Exception $e){
         header("location:todolist.php");
     }
 
+    //Archiver des données dans une deuxième base de données
+    if(isset($_POST['archive'])){
+        $check = $_POST['check']; //Nouvelle variable
+        $inserer = $bdd->exec("INSERT INTO Archivage VALUE ('.$check.')");//prepare : préparer uen requête -------Les deux points représentent une autre variables
+        $delete = $bdd->prepare("DELETE from todolist WHERE id= '.$check.'");
+        header("location:todolist.php");
+    }
+
     
 
 ?>
@@ -75,25 +83,25 @@ catch (Exception $e){
 <body>
 
 <!--les tâches à enregistrer représentées dans un premier bloc -->
-    <fieldset>  
+    <fieldset class="btn">  
         <form action="#" method="POST">
         <?php afficher()?> <!-- On rappelle la fonction -->
-        <input type="submit" value="supprimer" name="supprimer"><p></p>
-        <input type="submit" value="archive" name="archive"><p></p>
+        <input class="sup" type="submit" value="supprimer" name="supprimer"><p></p>
+        <input class="archive" type="submit" value="archive" name="archive"><p></p>
         </form>
     </fieldset>
 
     <fieldset>
-        <?php archivage()?>
+        <?php archivage()?><!-- On rappelle la fonction-->
     </fieldset>
 
 
 <!-- Deuxième bloc où on retrouve le formulaire et le bouton ajouter -->
-    <fieldset>
+    <fieldset class="form">
         <form action="#" method="POST">
             <label for="task">La tâche à ajouter</label>
-            <input name="task" type="text"required placeholder="rajouter une tâche">
-            <input type="submit" value="ajouter" name="ajout">
+            <input class="rajout" name="task" type="text"required placeholder="rajouter une tâche">
+            <input class="ajout" type="submit" value="ajouter" name="ajout">
         </form>
     </fieldset>
 
