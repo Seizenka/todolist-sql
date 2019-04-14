@@ -16,6 +16,11 @@ h3 {
 p {
     color: white;
     text-align: center;
+    
+}
+
+p .draggble {
+    text-decoration : none;
 }
 
 td {
@@ -61,6 +66,7 @@ fieldset {
     padding : 10px;
     color: white;
     width: 15%;
+ 
 
 }
 
@@ -74,6 +80,10 @@ fieldset {
 
 }
 
+.done {
+    text-decoration : line-through;
+}
+
 .check {
     color: white;
     text-align: center;
@@ -83,16 +93,40 @@ fieldset {
     text-align: center;
 }
 
+.valider {
+    background-color : rgb(106, 8, 163);
+    border: none;
+    border-radius: 10px;
+    padding : 10px;
+    color: white;
+}
+
+.q {
+    margin-right: 5px;
+}
+
+//drag et drop
+.drop_hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset; //ombre qui apparaît lorsqu'on drop
+}
+/*Reponsive*/
+
 @media (min-width: 300px) and (max-width: 800px){ 
     .sup, .archive {
         width: 50%;
+        
     }
     .rajout, .ajout {
         margin-top: 10px;
     }
-    .ajout {
+    .ajout, .valider {
         width : 50%;
     }
+
+    .archive, .valider {
+        margin-top: 10px;
+    }
+
 }
 
 

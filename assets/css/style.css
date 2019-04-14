@@ -6,6 +6,8 @@ h3 { color: white; text-align: center; }
 
 p { color: white; text-align: center; }
 
+p .draggble { text-decoration: none; }
+
 td { color: white; }
 
 .form { text-align: center; padding: 20px; }
@@ -22,11 +24,21 @@ fieldset { background-color: #302f30; border: none; margin: 5px; border-radius: 
 
 .archive { background-color: #6a08a3; border: none; border-radius: 10px; padding: 10px; color: white; width: 15%; }
 
+.done { text-decoration: line-through; }
+
 .check { color: white; text-align: center; }
 
 .btn { text-align: center; }
 
+.valider { background-color: #6a08a3; border: none; border-radius: 10px; padding: 10px; color: white; }
+
+.q { margin-right: 5px; }
+
+.drop_hover { -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset; box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset; }
+
+/*Reponsive*/
 @media (min-width: 300px) and (max-width: 800px) { .sup, .archive { width: 50%; }
   .rajout, .ajout { margin-top: 10px; }
-  .ajout { width: 50%; } }
+  .ajout, .valider { width: 50%; }
+  .archive, .valider { margin-top: 10px; } }
 /*# sourceMappingURL=style.css.map */

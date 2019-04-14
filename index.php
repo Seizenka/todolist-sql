@@ -19,13 +19,26 @@ $req = $bdd->query("SELECT * FROM todolist");
     $affiche=$req->fetchAll();
     //Parcourir le tableau
     echo '<h1> Ma todolist !</h1>';
-    echo '<div class="check">';
+    //Barre de recherche
+    echo '<form action="index.php" method="POST">';
+    echo '<input type="search" class="q" name="q" placeholder="Search..." />';
+    echo '<input type="submit" class="valider" name ="valider" value="valider" />';
+    echo '</form>';
+    echo '<div class="check" class="dropper">';
     foreach($affiche as $component){
-        echo '<td><input name="check[]" type="checkbox" value="'.$component['task'].'">'.$component["task"].'</td><p></p>'; //check[] parce qu'on peut check plusieurs en même temps
-      
+        echo '<p class="draggable"><input name="check[]" type="checkbox" value="'.$component['task'].'">'.$component["task"].'</p><p></p>'; //check[] parce qu'on peut check plusieurs en même temps
+       
+           
     }
     echo '</div>';
 }
+
+    //Barre de recherche
+    if(isset($_GET['q']) AND !empty($_POST['q'])) {
+        $q = htmlspecialchars($_POST['q']);
+        $articles = $bdd->query('SELECT done FROM archive WHERE done LIKE "%'.$q.'%" ORDER BY id ASC');
+        
+     }
 
     //Pour afficher le contenu de la base de données archive
     function archivage(){
@@ -35,7 +48,7 @@ $req = $bdd->query("SELECT * FROM todolist");
         //Parcourir le tableau
         echo '<h3>ARCHIVE</h3>';
         foreach($show as $composent){
-            echo '<p>'.$composent["done"].'</p>'; //check[] parce qu'on peut check plusieurs en même temps
+            echo '<p class="done">'.$composent["done"].'</p>'; //check[] parce qu'on peut check plusieurs en même temps
           
         }    
     }
@@ -43,6 +56,7 @@ $req = $bdd->query("SELECT * FROM todolist");
     //Nettoyer les champs
     $sanitisation = array (
         'task' => FILTER_SANITIZE_STRING, FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'q' => FILTER_SANITIZE_STRING, FILTER_SANITIZE_FULL_SPECIAL_CHARS,
     );
     $result = filter_input_array(INPUT_POST, $sanitisation);
     //Si le résultat retourné après le filtre est vide ou erreur
@@ -83,15 +97,16 @@ $req = $bdd->query("SELECT * FROM todolist");
 <body>
 
 <!--les tâches à enregistrer représentées dans un premier bloc -->
-    <fieldset class="btn">  
+    <fieldset class="btn">
+    
         <form action="index.php" method="POST">
         <?php afficher()?> <!-- On rappelle la fonction -->
-        <input class="sup" type="submit" value="supprimer" name="supprimer"><p></p>
+        <input class="sup" type="submit" value="supprimer" name="supprimer">
         <input class="archive" type="submit" value="archive" name="archive"><p></p>
         </form>
     </fieldset>
 
-    <fieldset>
+    <fieldset class="dropper">
         <?php archivage()?><!-- On rappelle la fonction-->
     </fieldset>
 
@@ -104,6 +119,6 @@ $req = $bdd->query("SELECT * FROM todolist");
             <input class="ajout" type="submit" value="ajouter" name="ajout">
         </form>
     </fieldset>
-
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
